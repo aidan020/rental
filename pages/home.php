@@ -70,7 +70,7 @@ $recommendcar = $query2->fetchAll(PDO::FETCH_ASSOC);
         <img src="assets/images/products/<?= $car['afbeelding']; ?>" alt="">
  
         <div class="car-specification">
-                <span><img src="assets/images/icons/gas-station.svg" alt=""><?= $car['brandstof']; ?></span>
+                <span><img src="assets/images/icons/gas-station.svg" alt=""><?= $car['benzine']; ?></span>
                 <span><img src="assets/images/icons/profile-2user.svg" alt=""><?= $car['capaciteit']; ?></span>
         </div>
  
