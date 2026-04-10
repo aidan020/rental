@@ -1,16 +1,16 @@
 <?php require "includes/header.php" ?>
 <?php require "database/connection.php" ?>
- 
-<?php //populair section//
+
+<?php
 $query = $conn->prepare("SELECT * FROM autos limit 4");
 $query->execute();
 $popularcar = $query->fetchAll(PDO::FETCH_ASSOC);
- 
+
 $query2 = $conn->prepare("SELECT * FROM autos limit 5 OFFSET 4");
 $query2->execute();
 $recommendcar = $query2->fetchAll(PDO::FETCH_ASSOC);
 ?>
- 
+
 <header>
     <div class="advertorials">
         <div class="advertorial">
@@ -28,64 +28,67 @@ $recommendcar = $query2->fetchAll(PDO::FETCH_ASSOC);
             <img src="assets/images/header-block-background.svg" alt="" class="background-header-element">
         </div>
     </div>
-</header>
- 
-<main>
-<h2 class="section-title">Populaire auto's</h2>
-<div class="cars">
- 
-    <?php foreach ($popularcar as $car ) : ?>
-        <div class="car-details">
-            <div class="car-brand">
-                <h3><?= $car['merk']; ?></h3>
-                <div class="car-type"><?= $car['autotype']; ?></div>
-            </div>
- 
-            <img src="assets/images/products/<?= $car['afbeelding']; ?>" alt="">
- 
-            <div class="car-specification">
-                <span><img src="assets/images/icons/gas-station.svg" alt=""><?= $car['benzine']; ?></span>
-                <span><img src="assets/images/icons/profile-2user.svg" alt=""><?= $car['capaciteit']; ?></span>
-            </div>
- 
-            <div class="rent-details">
-                <span><span class="font-weight-bold">€<?= $car['prijs']; ?></span> / dag</span>
-                <a href="/car-detail" class="button-primary">Bekijk nu</a>
-            </div>
-        </div>
-    <?php endforeach; ?>
- 
-</div>
- 
-<h2 class="section-title">Aanbevolen auto's</h2>
-<div class="cars">
- 
-<?php foreach ($recommendcar as $car) : ?>
-    <div class="car-details">
-        <div class="car-brand">
-            <h3><?= $car['merk']; ?></h3>
-            <div class="car-type"><?= $car['autotype']; ?></div>
-        </div>
- 
-        <img src="assets/images/products/<?= $car['afbeelding']; ?>" alt="">
- 
-        <div class="car-specification">
-                <span><img src="assets/images/icons/gas-station.svg" alt=""><?= $car['benzine']; ?></span>
-                <span><img src="assets/images/icons/profile-2user.svg" alt=""><?= $car['capaciteit']; ?></span>
-        </div>
- 
-        <div class="rent-details">
-            <span><span class="font-weight-bold">€<?= $car['prijs']; ?></span> / dag</span>
-            <a href="/car-detail" class="button-primary">Bekijk nu</a>
-        </div>
+
+
     </div>
-<?php endforeach; ?>
- 
-</div>
- 
-<div class="show-more">
-    <a class="button-primary" href="#">Toon alle</a>
-</div>
+</header>
+
+<main>
+    <h2 class="section-title">Populaire auto's</h2>
+    <div class="cars">
+
+        <?php foreach ($popularcar as $car): ?>
+            <div class="car-details">
+                <div class="car-brand">
+                    <h3><?= $car['merk']; ?></h3>
+                    <div class="car-type"><?= $car['autotype']; ?></div>
+                </div>
+
+                <img src="assets/images/products/<?= $car['afbeelding']; ?>" alt="">
+
+                <div class="car-specification">
+                    <span><img src="assets/images/icons/gas-station.svg" alt=""><?= $car['benzine']; ?></span>
+                    <span><img src="assets/images/icons/profile-2user.svg" alt=""><?= $car['capaciteit']; ?></span>
+                </div>
+
+                <div class="rent-details">
+                    <span><span class="font-weight-bold">€<?= $car['prijs']; ?></span> / dag</span>
+                    <a href="/car-detail" class="button-primary">Bekijk nu</a>
+                </div>
+            </div>
+        <?php endforeach; ?>
+
+    </div>
+
+    <h2 class="section-title">Aanbevolen auto's</h2>
+    <div class="cars">
+
+        <?php foreach ($recommendcar as $car): ?>
+            <div class="car-details">
+                <div class="car-brand">
+                    <h3><?= $car['merk']; ?></h3>
+                    <div class="car-type"><?= $car['autotype']; ?></div>
+                </div>
+
+                <img src="assets/images/products/<?= $car['afbeelding']; ?>" alt="">
+
+                <div class="car-specification">
+                    <span><img src="assets/images/icons/gas-station.svg" alt=""><?= $car['benzine']; ?></span>
+                    <span><img src="assets/images/icons/profile-2user.svg" alt=""><?= $car['capaciteit']; ?></span>
+                </div>
+
+                <div class="rent-details">
+                    <span><span class="font-weight-bold">€<?= $car['prijs']; ?></span> / dag</span>
+                    <a href="/car-detail" class="button-primary">Bekijk nu</a>
+                </div>
+            </div>
+        <?php endforeach; ?>
+
+    </div>
+
+    <div class="show-more">
+        <a class="button-primary" href="#">Toon alle</a>
+    </div>
 </main>
- 
+
 <?php require "includes/footer.php" ?>
