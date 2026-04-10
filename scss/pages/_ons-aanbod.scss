@@ -1,0 +1,133 @@
+.aanbod-layout {
+    display: flex;
+    gap: 2em;
+    padding: 1em 2em;
+    align-items: flex-start;
+}
+
+.filter-sidebar {
+    min-width: 250px;
+    max-width: 250px;
+    background: white;
+    padding: 24px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5em;
+    height: fit-content;
+    position: sticky;
+    top: 1em;
+
+    h3 {
+        margin: 0;
+        font-size: 1em;
+        font-weight: 600;
+        color: #1A202C;
+    }
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    label {
+        font-size: 0.85em;
+        font-weight: 500;
+        color: #90A3BF;
+    }
+
+    select {
+        padding: 10px 12px;
+        border: 1px solid #C3D4E9;
+        border-radius: 8px;
+        font-size: 0.9em;
+        color: #1A202C;
+        background: white;
+        cursor: pointer;
+        width: 100%;
+
+        &:focus {
+            outline: none;
+            border-color: #54A6FF;
+        }
+    }
+
+    input[type="range"] {
+        width: 100%;
+        accent-color: #54A6FF;
+        cursor: pointer;
+    }
+}
+
+.filter-reset {
+    text-align: center;
+    color: #90A3BF;
+    font-size: 0.85em;
+    text-decoration: underline;
+
+    &:hover {
+        color: #54A6FF;
+    }
+}
+
+.aanbod-cars {
+    flex: 1;
+    min-width: 0;
+
+    .cars {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+    }
+
+    .car-details {
+        display: flex;
+        flex-direction: column;
+        background-color: white;
+        padding: 24px;
+        gap: 24px;
+        border-radius: 10px;
+
+        h3 { margin: 0; }
+
+        .car-type { color: #90A3BF; }
+
+        > img {
+            width: 100%;
+            height: 150px;
+            object-fit: contain;
+        }
+
+        .car-specification {
+            display: flex;
+            justify-content: space-between;
+
+            img {
+                width: 20px;
+                height: 20px;
+            }
+
+            span {
+                display: flex;
+                align-items: center;
+                gap: 5px;
+                color: #90A3BF;
+            }
+        }
+
+        .rent-details {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+    }
+}
+
+.geen-resultaten {
+    color: #90A3BF;
+    text-align: center;
+    padding: 2em;
+    background: white;
+    border-radius: 10px;
+}
