@@ -1,14 +1,19 @@
 <?php
 session_start();
-require_once "database/connection.php";
+require_once __DIR__ . "/../database/connection.php";
 
-$select_user = $conn->prepare("SELECT * FROM account WHERE email = :email");
-$select_user->bindParam(":email", $_POST['email']);
+$select_user = $conn->prepare("SELECT * FROM account WHERE Email = :Email");
+$select_user->bindParam(":Email", $_POST['Email']);
 $select_user->execute();
 $user = $select_user->fetch(PDO::FETCH_ASSOC);
 
-if (password_verify($_POST['password'], $user['password'])) {
-    $_SESSION['id'] = $user['id'];
-    $_SESSION['email'] = $user['email'];
-    header('Location: /');
+if ($user && password_verify($_POST['password'], $user['password'])) {
+    $_SESSION['Id'] = $user['Id'];
+    $_SESSION['Email'] = $user['Email'];
+    header('Location: /home');
+    exit();
+} else {
+    $_SESSION['message'] = "Ongeldig e-mailadres of wachtwoord.";
+    header('Location: /login-form');
+    exit();
 }
