@@ -1,0 +1,54 @@
+<?php require __DIR__ . "/../includes/header.php"; ?>
+<?php require __DIR__ . "/../database/connection.php"; ?>
+
+<?php
+$zoekterm = trim($_GET['q'] ?? '');
+
+if ($zoekterm !== '') {
+    $stmt = $conn->prepare("
+        SELECT * FROM autos
+        WHERE merk LIKE :zoek
+           OR autotype LIKE :zoek
+           OR benzine LIKE :zoek
+    ");
+    $stmt->execute([':zoek' => '%' . $zoekterm . '%']);
+    $resultaten = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} else {
+    $resultaten = [];
+}
+?>
+
+<main class="aanbod">
+    <div class="cars">
+        <?php if ($zoekterm === ''): ?>
+            <p>Voer een zoekterm in.</p>
+        <?php elseif (empty($resultaten)): ?>
+            <p>Geen auto's gevonden voor "<?= htmlspecialchars($zoekterm) ?>".</p>
+        <?php else: ?>
+            <?php foreach ($resultaten as $car): ?>
+                <div class="car-details">
+                    <div class="car-brand">
+                        <h3><?= htmlspecialchars($car['merk']) ?></h3>
+                        <div class="car-type"><?= htmlspecialchars($car['autotype']) ?></div>
+                    </div>
+
+                    <img src="/assets/images/products/<?= htmlspecialchars($car['afbeelding']) ?>"
+                         alt="<?= htmlspecialchars($car['merk']) ?>">
+
+                    <div class="car-specification">
+                        <span><?= htmlspecialchars($car['benzine']) ?></span>
+                        <span><?= htmlspecialchars($car['capaciteit']) ?></span>
+                        <span><?= htmlspecialchars($car['autotype']) ?></span>
+                    </div>
+
+                    <div class="rent-details">
+                        <span><strong>€<?= htmlspecialchars($car['prijs']) ?></strong> / dag</span>
+                        <a href="/car-detail?kenteken=<?= urlencode($car['id']) ?>" class="button-primary">Bekijk nu</a>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        <?php endif; ?>
+    </div>
+</main>
+
+<?php require __DIR__ . "/../includes/footer.php"; ?>
