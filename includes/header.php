@@ -32,7 +32,7 @@
         </ul>
     </nav>
     <div class="menu">
-        <?php if(isset($_SESSION['id'])){ ?>
+        <?php if(isset($_SESSION['Id'])): ?>
         <div class="account">
             <img src="assets/images/profil.png" alt="">
             <div class="account-dropdown">
@@ -42,10 +42,9 @@
                 </ul>
             </div>
         </div>
-        <?php }else{ ?>
-            <a href="" class="button-primary">Start met huren</a>
-        <?php } ?>
-
+        <?php else: ?>
+            <a href="/login-form" class="button-primary">Start met huren</a>
+        <?php endif; ?>
     </div>
 </div>
 <div class="content">
