@@ -1,4 +1,5 @@
 <?php require "includes/header.php" ?>
+<?php require "database/connection.php" ?>
 <main>
     <form action="/register-handler" method="post" class="account-form">
         <h2>Maak een account aan</h2>
@@ -10,7 +11,7 @@
             session_destroy();
              endif; ?>
         <label for="email">Uw e-mail</label>
-        <input type="email" name="email" id="email" placeholder="johndoe@gmail.com" value="<?= isset($_SESSION['email']) ? htmlspecialchars($_SESSION['email']) : '' ?>" required autofocus>
+        <input type="email" name="email" id="email" placeholder="johndoe@gmail.com" value="<?= isset($_SESSION['Email']) ? htmlspecialchars($_SESSION['Email']) : '' ?>" required autofocus>
         <label for="password">Uw wachtwoord</label>
         <input type="password" name="password" id="password" placeholder="Uw wachtwoord" required>
         <label for="confirm-password">Herhaal wachtwoord</label>
