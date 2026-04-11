@@ -1,117 +1,172 @@
-<?php require "includes/header.php" ?>
-<?php require "database/connection.php" ?>
+<?php require "includes/header.php"; ?>
+<img scr="/assets/images/team/brian-mensah.png">
 
-<?php
-$where = [];
-$params = [];
-
-if (!empty($_GET['merk'])) {
-    $where[] = "merk = :merk";
-    $params[':merk'] = $_GET['merk'];
+<style>
+    .team-sub {
+  font-size: 16px;
+  color: #555;
+  line-height: 1.7;
+  margin-bottom: 2rem;
 }
 
-if (!empty($_GET['capaciteit'])) {
-    $where[] = "capaciteit = :capaciteit";
-    $params[':capaciteit'] = $_GET['capaciteit'];
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
 }
 
-if (!empty($_GET['prijs'])) {
-    $where[] = "prijs <= :prijs";
-    $params[':prijs'] = $_GET['prijs'];
+.card {
+  border: 1px solid #e5e5e5;
+  border-radius: 12px;
+  overflow: hidden;
 }
 
-$sql = "SELECT * FROM autos";
-if (!empty($where)) {
-    $sql .= " WHERE " . implode(" AND ", $where);
+.card img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  object-position: top;
+  display: block;
 }
 
-$query = $conn->prepare($sql);
-foreach ($params as $key => $value) {
-    $query->bindValue($key, $value);
-}
-$query->execute();
-$autos = $query->fetchAll(PDO::FETCH_ASSOC);
+.card-body { padding: 1rem; }
+.card-name { font-size: 15px; font-weight: 500; margin-bottom: 2px; }
+.card-role { font-size: 12px; color: #888; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.75rem; }
+.card-quote { font-size: 14px; color: #555; line-height: 1.6; border-left: 2px solid #ddd; padding-left: 0.75rem; }
 
-$merken = $conn->query("SELECT DISTINCT merk FROM autos ORDER BY merk")->fetchAll(PDO::FETCH_COLUMN);
-$capaciteiten = $conn->query("SELECT DISTINCT capaciteit FROM autos ORDER BY capaciteit")->fetchAll(PDO::FETCH_COLUMN);
-?>
+@media (max-width: 768px) { .team-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px) { .team-grid { grid-template-columns: 1fr; } }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+    font-family: sans-serif;
+  }
+
+  .banner {
+    width: 100%;
+    height: 340px;
+    object-fit: cover;
+    border-radius: 12px;
+    display: block;
+  }
+
+  .section-title {
+    font-size: 22px;
+    font-weight: 500;
+    margin: 2.5rem 0 1rem;
+  }
+
+  .divider {
+    border: none;
+    border-top: 1px solid #e5e5e5;
+    margin-bottom: 2rem;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  .grid p {
+    font-size: 16px;
+    line-height: 1.8;
+    color: #555;
+  }
+
+  .grid p + p {
+    margin-top: 1rem;
+  }
+
+  .workplace {
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+    border-radius: 12px;
+    display: block;
+  }
+
+  @media (max-width: 680px) {
+    .grid { grid-template-columns: 1fr; gap: 1.5rem; }
+    .banner { height: 200px; }
+  }
+</style>
 
 <main>
-    <h2 class="section-title">Ons aanbod</h2>
+    <img class="banner" src="/assets/images/banner.jpeg" alt="Banner">
 
-    <div class="aanbod-layout">
+    <h2 class="section-title">Over Rydr.</h2>
+    <hr class="divider">
 
-        <form class="filter-sidebar" method="GET" action="/ons-aanbod">
-
-            <h3>Filteren</h3>
-
-            <div class="filter-group">
-                <label for="merk">Automerk</label>
-                <select name="merk" id="merk">
-                    <option value="">Alle merken</option>
-                    <?php foreach ($merken as $merk): ?>
-                        <option value="<?= htmlspecialchars($merk) ?>" <?= (isset($_GET['merk']) && $_GET['merk'] === $merk) ? 'selected' : '' ?>>
-                            <?= htmlspecialchars($merk) ?>
-                        </option>
-                    <?php endforeach; ?>
-                </select>
-            </div>
-
-            <div class="filter-group">
-                <label for="capaciteit">Aantal personen</label>
-                <select name="capaciteit" id="capaciteit">
-                    <option value="">Alle capaciteiten</option>
-                    <?php foreach ($capaciteiten as $cap): ?>
-                        <option value="<?= htmlspecialchars($cap) ?>" <?= (isset($_GET['capaciteit']) && $_GET['capaciteit'] == $cap) ? 'selected' : '' ?>>
-                            <?= htmlspecialchars($cap) ?> personen
-                        </option>
-                    <?php endforeach; ?>
-                </select>
-            </div>
-
-            <div class="filter-group">
-                <label for="prijs">Max prijs per dag: €<span id="prijs-waarde"><?= isset($_GET['prijs']) ? $_GET['prijs'] : 2500 ?></span></label>
-                <input type="range" name="prijs" id="prijs" min="0" max="2500" value="<?= isset($_GET['prijs']) ? $_GET['prijs'] : 2500 ?>" oninput="document.getElementById('prijs-waarde').textContent = this.value">
-            </div>
-
-            <button type="submit" class="button-primary">Filteren</button>
-
-            <?php if (!empty($_GET)): ?>
-                <a href="/ons-aanbod" class="filter-reset">Reset filters</a>
-            <?php endif; ?>
-
-        </form>
-
-        <div class="aanbod-cars">
-            <?php if (empty($autos)): ?>
-                <p class="geen-resultaten">Geen auto's gevonden met deze filters.</p>
-            <?php else: ?>
-                <div class="cars">
-                    <?php foreach ($autos as $car): ?>
-                        <div class="car-details">
-                            <div class="car-brand">
-                                <h3><?= htmlspecialchars($car['merk']) ?></h3>
-                                <div class="car-type"><?= htmlspecialchars($car['autotype']) ?></div>
-                            </div>
-
-                            <img src="assets/images/products/<?= htmlspecialchars($car['afbeelding']) ?>" alt="">
-
-                            <div class="car-specification">
-                                <span><img src="assets/images/icons/gas-station.svg" alt=""><?= htmlspecialchars($car['benzine']) ?></span>
-                                <span><img src="assets/images/icons/profile-2user.svg" alt=""><?= htmlspecialchars($car['capaciteit']) ?></span>
-                            </div>
-
-                            <div class="rent-details">
-                                <span><span class="font-weight-bold">€<?= htmlspecialchars($car['prijs']) ?></span> / dag</span>
-                                <a href="/car-detail?Id=<?= (int)$car['Id'] ?>" class="button-primary">Bekijk nu</a>
-                            </div>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
-            <?php endif; ?>
+    <div class="grid">
+        <div>
+            <p>
+                Ons hoofdkantoor bevindt zich in het bruisende hart van Rotterdam, direct naast het Centraal Station.
+                Hier combineren we technologie, design en klantgerichtheid onder één dak.
+            </p>
+            <p>
+                In een modern pand met uitzicht op de skyline werken we elke dag aan de mobiliteit van morgen.
+                Loop je een keer binnen? De koffie staat klaar.
+            </p>
         </div>
 
+        <div>
+            <img class="workplace" src="/assets/images/work-place.png" alt="Werkplek">
+        </div>
     </div>
 </main>
 
-<?php require "includes/footer.php" ?>
+<!-- Team sectie -->
+<section class="team-section">
+  <h2 class="section-title">Ons team.</h2>
+  <p class="team-sub">
+    Achter Rydr zit een gedreven team dat elke dag werkt aan slimmere mobiliteit.
+    Mensen met passie, kennis en een gezonde dosis Rotterdamse nuchterheid.
+  </p>
+  <hr class="divider">
+
+  <div class="team-grid">
+
+    <div class="card">
+      <img src="/../assets/images/team/brian-mensah.png" alt="Jordan de Vries">
+      <div class="card-body">
+        <p class="card-name">youssef amrani</p>
+        <p class="card-role">Head of Product</p>
+        <p class="card-quote">"Bij Rydr bouwen we niet zomaar een app — we herdefiniëren hoe de stad beweegt."</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="/../assets/images/team/jasper-van-den-brink.png" alt="jasper-van-den-brink">
+      <div class="card-body">
+        <p class="card-name">jasper van den brink</p>
+        <p class="card-role">CEO & Co-founder</p>
+        <p class="card-quote">"Rotterdam is de perfecte plek om iets nieuws te bouwen. De energie hier is ongeëvenaard."</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="/../assets/images/team/lotte-de-graaf.png" alt="Lisa van den Berg">
+      <div class="card-body">
+        <p class="card-name">lotte de graaf</p>
+        <p class="card-role">Lead Designer</p>
+        <p class="card-quote">"Goed design merk je niet — het voelt gewoon logisch. Dat is waar ik elke dag voor ga."</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="/../assets/images/team/youssef-amrani.png" alt="Karim Essaidi">
+      <div class="card-body">
+        <p class="card-name">Brian-mensah</p>
+        <p class="card-role">Tech Lead</p>
+        <p class="card-quote">"De technologie achter Rydr is schaalbaar, snel en gebouwd om mee te groeien met de stad."</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+<?php require "includes/footer.php"; ?>
