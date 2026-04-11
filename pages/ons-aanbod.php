@@ -34,7 +34,6 @@ $autos = $query->fetchAll(PDO::FETCH_ASSOC);
 
 $merken = $conn->query("SELECT DISTINCT merk FROM autos ORDER BY merk")->fetchAll(PDO::FETCH_COLUMN);
 $capaciteiten = $conn->query("SELECT DISTINCT capaciteit FROM autos ORDER BY capaciteit")->fetchAll(PDO::FETCH_COLUMN);
-$maxPrijs = $conn->query("SELECT MAX(prijs) FROM autos")->fetchColumn();
 ?>
 
 <main>
@@ -71,8 +70,8 @@ $maxPrijs = $conn->query("SELECT MAX(prijs) FROM autos")->fetchColumn();
             </div>
 
             <div class="filter-group">
-                <label for="prijs">Max prijs per dag: €<span id="prijs-waarde"><?= isset($_GET['prijs']) ? $_GET['prijs'] : $maxPrijs ?></span></label>
-                <input type="range" name="prijs" id="prijs" min="0" max="<?= $maxPrijs ?>" value="<?= isset($_GET['prijs']) ? $_GET['prijs'] : $maxPrijs ?>" oninput="document.getElementById('prijs-waarde').textContent = this.value">
+                <label for="prijs">Max prijs per dag: €<span id="prijs-waarde"><?= isset($_GET['prijs']) ? $_GET['prijs'] : 2500 ?></span></label>
+                <input type="range" name="prijs" id="prijs" min="0" max="2500" value="<?= isset($_GET['prijs']) ? $_GET['prijs'] : 2500 ?>" oninput="document.getElementById('prijs-waarde').textContent = this.value">
             </div>
 
             <button type="submit" class="button-primary">Filteren</button>
@@ -91,20 +90,20 @@ $maxPrijs = $conn->query("SELECT MAX(prijs) FROM autos")->fetchColumn();
                     <?php foreach ($autos as $car): ?>
                         <div class="car-details">
                             <div class="car-brand">
-                                <h3><?= $car['merk']; ?></h3>
-                                <div class="car-type"><?= $car['autotype']; ?></div>
+                                <h3><?= htmlspecialchars($car['merk']) ?></h3>
+                                <div class="car-type"><?= htmlspecialchars($car['autotype']) ?></div>
                             </div>
 
-                            <img src="assets/images/products/<?= $car['afbeelding']; ?>" alt="">
+                            <img src="assets/images/products/<?= htmlspecialchars($car['afbeelding']) ?>" alt="">
 
                             <div class="car-specification">
-                                <span><img src="assets/images/icons/gas-station.svg" alt=""><?= $car['benzine']; ?></span>
-                                <span><img src="assets/images/icons/profile-2user.svg" alt=""><?= $car['capaciteit']; ?></span>
+                                <span><img src="assets/images/icons/gas-station.svg" alt=""><?= htmlspecialchars($car['benzine']) ?></span>
+                                <span><img src="assets/images/icons/profile-2user.svg" alt=""><?= htmlspecialchars($car['capaciteit']) ?></span>
                             </div>
 
                             <div class="rent-details">
-                                <span><span class="font-weight-bold">€<?= $car['prijs']; ?></span> / dag</span>
-                                <a href="/car-detail" class="button-primary">Bekijk nu</a>
+                                <span><span class="font-weight-bold">€<?= htmlspecialchars($car['prijs']) ?></span> / dag</span>
+                                <a href="/car-detail?Id=<?= (int)$car['Id'] ?>" class="button-primary">Bekijk nu</a>
                             </div>
                         </div>
                     <?php endforeach; ?>
