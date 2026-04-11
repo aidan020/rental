@@ -1,8 +1,15 @@
-.button-primary{
+.button-primary {
   background-color: $color-primary !important;
   color: white !important;
   border-radius: 4px;
   padding: 10px 20px;
   max-width: fit-content;
   text-decoration: none;
+
+  /* Transition voor alle animaties */
+  transition: transform 0.25s ease, background-color 0.25s ease;
+}
+
+.button-primary:hover {
+  transform: translateY(-3px) scale(1.03);
 }
