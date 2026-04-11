@@ -1,22 +1,47 @@
-.car-detail{
+.car-detail {
 
-  .grid{
+  .grid {
     gap: 50px;
-    .car-type .row{
+    align-items: stretch;
+
+    .car-type .row {
       display: flex;
       justify-content: space-between;
     }
   }
 
-  .call-to-action{
+  .advertorial {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    transition: box-shadow 0.3s ease;
+
+    &:hover {
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    }
+
+    img.car-main-image {
+      width: 60%;
+      max-width: 60%;
+      height: auto;
+      position: relative;
+      z-index: 1;
+    }
+  }
+
+  .call-to-action {
     display: flex;
     padding-top: 5em;
-    .row{
+
+    .row {
       justify-content: left !important;
       align-items: center;
     }
   }
-  .call-to-action .row:last-of-type{
+
+  .call-to-action .row:last-of-type {
     display: flex;
     justify-content: flex-end !important;
   }
