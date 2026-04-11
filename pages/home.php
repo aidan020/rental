@@ -28,66 +28,53 @@ $recommendcar = $query2->fetchAll(PDO::FETCH_ASSOC);
             <img src="assets/images/header-block-background.svg" alt="" class="background-header-element">
         </div>
     </div>
-
-
-    </div>
 </header>
 
 <main>
     <h2 class="section-title">Populaire auto's</h2>
     <div class="cars">
-
         <?php foreach ($popularcar as $car): ?>
             <div class="car-details">
                 <div class="car-brand">
-                    <h3><?= $car['merk']; ?></h3>
-                    <div class="car-type"><?= $car['autotype']; ?></div>
+                    <h3><?php echo $car['merk']; ?></h3>
+                    <div class="car-type"><?php echo $car['autotype']; ?></div>
                 </div>
-
-                <img src="assets/images/products/<?= $car['afbeelding']; ?>" alt="">
-
+                <img src="assets/images/products/<?php echo $car['afbeelding']; ?>" alt="">
                 <div class="car-specification">
-                    <span><img src="assets/images/icons/gas-station.svg" alt=""><?= $car['benzine']; ?></span>
-                    <span><img src="assets/images/icons/profile-2user.svg" alt=""><?= $car['capaciteit']; ?></span>
+                    <span><img src="assets/images/icons/gas-station.svg" alt=""><?php echo $car['benzine']; ?></span>
+                    <span><img src="assets/images/icons/profile-2user.svg" alt=""><?php echo $car['capaciteit']; ?></span>
                 </div>
-
                 <div class="rent-details">
-                    <span><span class="font-weight-bold">€<?= $car['prijs']; ?></span> / dag</span>
-                    <a href="/car-detail" class="button-primary">Bekijk nu</a>
+                    <span><span class="font-weight-bold">€<?php echo $car['prijs']; ?></span> / dag</span>
+                    <a href="/car-detail?Id=<?php echo $car['Id']; ?>" class="button-primary">Bekijk nu</a>
                 </div>
             </div>
         <?php endforeach; ?>
-
     </div>
 
     <h2 class="section-title">Aanbevolen auto's</h2>
     <div class="cars">
-
         <?php foreach ($recommendcar as $car): ?>
             <div class="car-details">
                 <div class="car-brand">
-                    <h3><?= $car['merk']; ?></h3>
-                    <div class="car-type"><?= $car['autotype']; ?></div>
+                    <h3><?php echo $car['merk']; ?></h3>
+                    <div class="car-type"><?php echo $car['autotype']; ?></div>
                 </div>
-
-                <img src="assets/images/products/<?= $car['afbeelding']; ?>" alt="">
-
+                <img src="assets/images/products/<?php echo $car['afbeelding']; ?>" alt="">
                 <div class="car-specification">
-                    <span><img src="assets/images/icons/gas-station.svg" alt=""><?= $car['benzine']; ?></span>
-                    <span><img src="assets/images/icons/profile-2user.svg" alt=""><?= $car['capaciteit']; ?></span>
+                    <span><img src="assets/images/icons/gas-station.svg" alt=""><?php echo $car['benzine']; ?></span>
+                    <span><img src="assets/images/icons/profile-2user.svg" alt=""><?php echo $car['capaciteit']; ?></span>
                 </div>
-
                 <div class="rent-details">
-                    <span><span class="font-weight-bold">€<?= $car['prijs']; ?></span> / dag</span>
-                    <a href="/car-detail" class="button-primary">Bekijk nu</a>
+                    <span><span class="font-weight-bold">€<?php echo $car['prijs']; ?></span> / dag</span>
+                    <a href="/car-detail?Id=<?php echo $car['Id']; ?>" class="button-primary">Bekijk nu</a>
                 </div>
             </div>
         <?php endforeach; ?>
-
     </div>
 
     <div class="show-more">
-        <a class="button-primary" href="#">Toon alle</a>
+        <a class="button-primary" href="/ons-aanbod">Toon alle</a>
     </div>
 </main>
 
