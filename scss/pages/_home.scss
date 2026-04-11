@@ -3,12 +3,13 @@
   color: #90A3BF;
 }
 
-.cars{
+.cars, .aanbod .cars {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(275px, 1fr));
   gap: 20px;
-  .car-details{
-    h3{
+
+  .car-details {
+    h3 {
       margin: 0;
     }
     display: flex;
@@ -16,31 +17,46 @@
     background-color: white;
     padding: 24px;
     gap: 24px;
-    .car-type{
+    border-radius: 10px;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+
+    &:hover {
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+      transform: translateY(-4px);
+    }
+
+    .car-type {
       color: #90A3BF;
     }
+
+    > img {
+      width: 100%;
+      max-height: 87px;
+      object-fit: contain;
+      object-position: center;
+    }
   }
-  img{
-    max-height: 87px;
-  }
-  .car-specification{
+
+  .car-specification {
     display: flex;
     justify-content: space-between;
-    span{
+
+    span {
       display: flex;
       align-items: center;
       gap: 5px;
       color: #90A3BF;
     }
   }
-  .rent-details{
+
+  .rent-details {
     display: flex;
     align-items: center;
     justify-content: space-between;
   }
 }
 
-.show-more{
+.show-more {
   display: flex;
   align-items: center;
   justify-content: center;
