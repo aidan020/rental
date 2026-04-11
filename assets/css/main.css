@@ -45,6 +45,12 @@ main {
   padding: 10px 20px;
   max-width: fit-content;
   text-decoration: none;
+  /* Transition voor alle animaties */
+  transition: transform 0.25s ease, background-color 0.25s ease;
+}
+
+.button-primary:hover {
+  transform: translateY(-3px) scale(1.03);
 }
 
 .succes-message {
@@ -189,11 +195,10 @@ main {
 .advertorial h2 {
   color: white;
   max-width: 50%;
-  /* The Best Platform for Car Rental */
   font-weight: 400;
-  line-height: 150%; /* or 48px */
-  letter-spacing: -0.03em; /* Primary/0 */
-  color: #FFFFFF; /* Inside auto layout */
+  line-height: 150%;
+  letter-spacing: -0.03em;
+  color: #FFFFFF;
   margin: 0;
 }
 .advertorial p {
@@ -207,6 +212,12 @@ main {
 .advertorial .background-header-element {
   position: absolute;
   z-index: 0;
+}
+
+.car-detail .advertorial img {
+  width: 60%;
+  max-width: 60%;
+  margin: auto;
 }
 
 footer {
@@ -223,12 +234,12 @@ footer .footer-links {
   gap: 3em;
   justify-content: flex-end;
 }
+footer .footer-links .links h3 {
+  font-weight: bold;
+}
 footer .footer-links .links {
   display: flex;
   flex-direction: column;
-}
-footer .footer-links .links h3 {
-  font-weight: bold;
 }
 footer .footer-links .links ul {
   padding-left: 0;
@@ -393,10 +404,29 @@ footer .footer-links .links ul a {
 
 .car-detail .grid {
   gap: 50px;
+  align-items: stretch;
 }
 .car-detail .grid .car-type .row {
   display: flex;
   justify-content: space-between;
+}
+.car-detail .advertorial {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  transition: box-shadow 0.3s ease;
+}
+.car-detail .advertorial:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+.car-detail .advertorial img.car-main-image {
+  width: 60%;
+  max-width: 60%;
+  height: auto;
+  position: relative;
+  z-index: 1;
 }
 .car-detail .call-to-action {
   display: flex;
@@ -416,38 +446,47 @@ footer .footer-links .links ul a {
   color: #90A3BF;
 }
 
-.cars {
+.cars, .aanbod .cars {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(275px, 1fr));
   gap: 20px;
 }
-.cars .car-details {
+.cars .car-details h3, .aanbod .cars .car-details h3 {
+  margin: 0;
+}
+.cars .car-details, .aanbod .cars .car-details {
   display: flex;
   flex-direction: column;
   background-color: white;
   padding: 24px;
   gap: 24px;
+  border-radius: 10px;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
-.cars .car-details h3 {
-  margin: 0;
+.cars .car-details:hover, .aanbod .cars .car-details:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  transform: translateY(-4px);
 }
-.cars .car-details .car-type {
+.cars .car-details .car-type, .aanbod .cars .car-details .car-type {
   color: #90A3BF;
 }
-.cars img {
+.cars .car-details > img, .aanbod .cars .car-details > img {
+  width: 100%;
   max-height: 87px;
+  object-fit: contain;
+  object-position: center;
 }
-.cars .car-specification {
+.cars .car-specification, .aanbod .cars .car-specification {
   display: flex;
   justify-content: space-between;
 }
-.cars .car-specification span {
+.cars .car-specification span, .aanbod .cars .car-specification span {
   display: flex;
   align-items: center;
   gap: 5px;
   color: #90A3BF;
 }
-.cars .rent-details {
+.cars .rent-details, .aanbod .cars .rent-details {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -467,6 +506,8 @@ footer .footer-links .links ul a {
   display: flex;
   flex-direction: column;
   max-width: 600px;
+  border-radius: 10px;
+  transition: box-shadow 0.3s ease;
 }
 .account-form input {
   background-color: #F6F7F9;
@@ -474,9 +515,133 @@ footer .footer-links .links ul a {
   margin-bottom: 24px;
   padding: 1em 2em;
   border-radius: 10px;
+  transition: transform 0.2s ease;
 }
 .account-form label {
   margin-bottom: 1em;
+}
+
+.aanbod-layout {
+  display: flex;
+  gap: 2em;
+  padding: 1em 2em;
+  align-items: flex-start;
+}
+
+.filter-sidebar {
+  min-width: 250px;
+  max-width: 250px;
+  background: white;
+  padding: 24px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5em;
+  height: fit-content;
+  position: sticky;
+  top: 1em;
+}
+.filter-sidebar h3 {
+  margin: 0;
+  font-size: 1em;
+  font-weight: 600;
+  color: #1A202C;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.filter-group label {
+  font-size: 0.85em;
+  font-weight: 500;
+  color: #90A3BF;
+}
+.filter-group select {
+  padding: 10px 12px;
+  border: 1px solid #C3D4E9;
+  border-radius: 8px;
+  font-size: 0.9em;
+  color: #1A202C;
+  background: white;
+  cursor: pointer;
+  width: 100%;
+}
+.filter-group select:focus {
+  outline: none;
+  border-color: #54A6FF;
+}
+.filter-group input[type=range] {
+  width: 100%;
+  accent-color: #54A6FF;
+  cursor: pointer;
+}
+
+.filter-reset {
+  text-align: center;
+  color: #90A3BF;
+  font-size: 0.85em;
+  text-decoration: underline;
+}
+.filter-reset:hover {
+  color: #54A6FF;
+}
+
+.aanbod-cars {
+  flex: 1;
+  min-width: 0;
+}
+.aanbod-cars .cars {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+.aanbod-cars .car-details {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  padding: 24px;
+  gap: 24px;
+  border-radius: 10px;
+}
+.aanbod-cars .car-details h3 {
+  margin: 0;
+}
+.aanbod-cars .car-details .car-type {
+  color: #90A3BF;
+}
+.aanbod-cars .car-details > img {
+  width: 100%;
+  height: 150px;
+  object-fit: contain;
+}
+.aanbod-cars .car-details .car-specification {
+  display: flex;
+  justify-content: space-between;
+}
+.aanbod-cars .car-details .car-specification img {
+  width: 20px;
+  height: 20px;
+}
+.aanbod-cars .car-details .car-specification span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #90A3BF;
+}
+.aanbod-cars .car-details .rent-details {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.geen-resultaten {
+  color: #90A3BF;
+  text-align: center;
+  padding: 2em;
+  background: white;
+  border-radius: 10px;
 }
 
 /*# sourceMappingURL=main.css.map */
